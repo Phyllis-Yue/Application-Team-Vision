@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Team Vision - BE Workflow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0a0e14;
+            --bg-surface: #12171f;
+            --bg-elevated: #1a2130;
+            --border-subtle: #2d3748;
+            --text-primary: #e8edf5;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            
+            --accent-flame: #ff6b35;
+            --accent-heat: #f7931e;
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #06b6d4;
+            --accent-red: #ef4444;
+            --accent-pink: #ec4899;
+            --accent-yellow: #eab308;
+            --accent-azure: #0078d4;
+            
+            --rachel: #ec4899;
+            --dave: #f97316;
+            --jop: #14b8a6;
+            --phyllis: #8b5cf6;
+            --grigoriy: #3b82f6;
+            --jiawen: #06b6d4;
+            --marco: #f59e0b;
+            --kevin: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(ellipse at 10% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .team-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: linear-gradient(135deg, var(--accent-flame), var(--accent-heat));
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* Section styling */
+        .section {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.1s; }
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.3s; }
+        .section:nth-child(4) { animation-delay: 0.4s; }
+        .section:nth-child(5) { animation-delay: 0.5s; }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .section-number {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .section-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-left: auto;
+        }
+
+        /* Person cards */
+        .intake-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .intake-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .person-card {
+            background: var(--bg-elevated);
+            border-radius: 14px;
+            padding: 20px;
+            border-left: 4px solid var(--person-color);
+            transition: all 0.2s ease;
+        }
+
+        .person-card:hover {
+            transform: translateX(4px);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .person-card.rachel { --person-color: var(--rachel); }
+        .person-card.dave { --person-color: var(--dave); }
+        .person-card.jop { --person-color: var(--jop); }
+        .person-card.phyllis { --person-color: var(--phyllis); }
+        .person-card.grigoriy { --person-color: var(--grigoriy); }
+        .person-card.jiawen { --person-color: var(--jiawen); }
+        .person-card.marco { --person-color: var(--marco); }
+        .person-card.kevin { --person-color: var(--kevin); }
+
+        .person-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .person-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--person-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: white;
+        }
+
+        .person-info h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .person-role {
+            font-size: 0.75rem;
+            color: var(--person-color);
+            font-weight: 500;
+        }
+
+        .person-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .person-desc strong {
+            color: var(--text-primary);
+        }
+
+        .person-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .tag {
+            padding: 4px 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .tag.highlight {
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--accent-purple);
+            border-color: var(--accent-purple);
+        }
+
+        /* Flow arrow */
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 0;
+        }
+
+        .arrow-line {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            background: var(--bg-elevated);
+            border-radius: 30px;
+            border: 1px dashed var(--accent-purple);
+        }
+
+        .arrow-line span {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .arrow-icon {
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+        }
+
+        /* Phyllis consolidation card */
+        .consolidation-card {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1));
+            border: 1px solid var(--accent-purple);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .consolidation-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--phyllis);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .consolidation-content h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .consolidation-role {
+            font-size: 0.8rem;
+            color: var(--accent-purple);
+            margin-bottom: 12px;
+        }
+
+        .consolidation-tasks {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            background: var(--bg-elevated);
+            border-radius: 10px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .task-item .icon {
+            font-size: 1rem;
+        }
+
+        /* Team grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 1000px) {
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .team-member-card {
+            background: var(--bg-elevated);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            border-top: 3px solid var(--person-color);
+            transition: all 0.2s ease;
+        }
+
+        .team-member-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .team-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--person-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: white;
+            margin: 0 auto 12px;
+        }
+
+        .team-member-card h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .team-specialty {
+            font-size: 0.8rem;
+            color: var(--person-color);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .team-details {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Work tracks */
+        .work-tracks {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 800px) {
+            .work-tracks {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .track-card {
+            background: var(--bg-elevated);
+            border-radius: 16px;
+            padding: 24px;
+            border-top: 3px solid var(--track-color);
+        }
+
+        .track-card.small { --track-color: var(--accent-blue); }
+        .track-card.large { --track-color: var(--accent-purple); }
+
+        .track-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .track-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--track-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .track-header h4 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .track-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .track-steps {
+            list-style: none;
+        }
+
+        .track-steps li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .track-steps li:last-child {
+            border-bottom: none;
+        }
+
+        .step-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--bg-surface);
+            border: 2px solid var(--track-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--track-color);
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .step-content {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .reviewer-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .reviewer-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .reviewer-tag.grig { color: var(--grigoriy); border: 1px solid var(--grigoriy); }
+        .reviewer-tag.jiawen { color: var(--jiawen); border: 1px solid var(--jiawen); }
+        .reviewer-tag.phyllis { color: var(--phyllis); border: 1px solid var(--phyllis); }
+
+        /* Release section */
+        .release-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 700px) {
+            .release-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .release-card {
+            background: var(--bg-elevated);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            border: 1px solid var(--border-subtle);
+            transition: all 0.2s ease;
+        }
+
+        .release-card:hover {
+            border-color: var(--release-color);
+        }
+
+        .release-card.acceptance { --release-color: var(--accent-blue); }
+        .release-card.production { --release-color: var(--accent-green); }
+
+        .release-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--release-color), rgba(255,255,255,0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin: 0 auto 16px;
+        }
+
+        .release-card h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .release-frequency {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--release-color);
+            margin-bottom: 8px;
+        }
+
+        .release-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Visual flow diagram */
+        .visual-flow {
+            background: var(--bg-elevated);
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        .visual-flow h4 {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .flow-box {
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .flow-box.intake { background: rgba(236, 72, 153, 0.15); color: var(--rachel); border: 1px solid var(--rachel); }
+        .flow-box.consolidate { background: rgba(139, 92, 246, 0.15); color: var(--phyllis); border: 1px solid var(--phyllis); }
+        .flow-box.sprint { background: rgba(6, 182, 212, 0.15); color: var(--jiawen); border: 1px solid var(--jiawen); }
+        .flow-box.review { background: rgba(59, 130, 246, 0.15); color: var(--grigoriy); border: 1px solid var(--grigoriy); }
+        .flow-box.acceptance { background: rgba(59, 130, 246, 0.2); color: var(--accent-blue); border: 1px solid var(--accent-blue); }
+        .flow-box.production { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); border: 1px solid var(--accent-green); }
+
+        .flow-arrow-small {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    
+    <div class="container">
+        <header>
+            <div class="team-badge">🔥 Weheat Engineering</div>
+            <h1>Backend Team Workflow</h1>
+            <p class="subtitle">Application Team Vision • How We Work</p>
+        </header>
+
+        <!-- Section 1: Feature Intake -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">1</div>
+                <div class="section-title">Feature / Project Intake</div>
+                <div class="section-subtitle">Sources of Work</div>
+            </div>
+
+            <div class="intake-grid">
+                <div class="person-card rachel">
+                    <div class="person-header">
+                        <div class="person-avatar">R</div>
+                        <div class="person-info">
+                            <h4>Rachel</h4>
+                            <div class="person-role">Product Designer</div>
+                        </div>
+                    </div>
+                    <div class="person-desc">
+                        <strong>New Application Features</strong> that tackle business problems
+                    </div>
+                    <div class="person-tags">
+                        <span class="tag highlight">Order Portal</span>
+                        <span class="tag highlight">Lead Portal</span>
+                        <span class="tag">New Features</span>
+                    </div>
+                </div>
+
+                <div class="person-card dave">
+                    <div class="person-header">
+                        <div class="person-avatar">D</div>
+                        <div class="person-info">
+                            <h4>Dave</h4>
+                            <div class="person-role">Firmware Team</div>
+                        </div>
+                    </div>
+                    <div class="person-desc">
+                        <strong>Firmware Team Requests</strong> to support new firmware development
+                    </div>
+                    <div class="person-tags">
+                        <span class="tag">FW Support</span>
+                        <span class="tag">Integration</span>
+                    </div>
+                </div>
+
+                <div class="person-card jop">
+                    <div class="person-header">
+                        <div class="person-avatar">J</div>
+                        <div class="person-info">
+                            <h4>Jop</h4>
+                            <div class="person-role">Expert Centre & Field Issue Liaison</div>
+                        </div>
+                    </div>
+                    <div class="person-desc">
+                        <strong>Address Customer Complaints</strong> like bug fixes, hotfixes
+                    </div>
+                    <div class="person-tags">
+                        <span class="tag">Bug Fixes</span>
+                        <span class="tag">Hotfixes</span>
+                        <span class="tag">Support</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">
+                <div class="arrow-line">
+                    <span class="arrow-icon">↓</span>
+                    <span>All requests go to <strong>Phyllis</strong> for context & timeline</span>
+                    <span class="arrow-icon">↓</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Consolidation & Planning -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">2</div>
+                <div class="section-title">Consolidation & Prioritization</div>
+                <div class="section-subtitle">Planning</div>
+            </div>
+
+            <div class="consolidation-card">
+                <div class="consolidation-avatar">P</div>
+                <div class="consolidation-content">
+                    <h3>Phyllis</h3>
+                    <div class="consolidation-role">Team Lead • Consolidation & Prioritization</div>
+                    <div class="consolidation-tasks">
+                        <div class="task-item">
+                            <span class="icon">📊</span>
+                            <span>Prioritize by <strong>urgency</strong></span>
+                        </div>
+                        <div class="task-item">
+                            <span class="icon">💥</span>
+                            <span>Prioritize by <strong>impact</strong></span>
+                        </div>
+                        <div class="task-item">
+                            <span class="icon">💰</span>
+                            <span>Prioritize by <strong>business value</strong></span>
+                        </div>
+                        <div class="task-item">
+                            <span class="icon">📅</span>
+                            <span>Plan <strong>1-3 months</strong> ahead</span>
+                        </div>
+                        <div class="task-item">
+                            <span class="icon">🏃</span>
+                            <span><strong>1-week</strong> sprints</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Sprint Team -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">3</div>
+                <div class="section-title">Sprint Execution</div>
+                <div class="section-subtitle">Team Specialties</div>
+            </div>
+
+            <div class="team-grid">
+                <div class="team-member-card grigoriy">
+                    <div class="team-avatar">G</div>
+                    <h4>Grigoriy</h4>
+                    <div class="team-specialty">Stability & POC</div>
+                    <div class="team-details">
+                        Stability improvement<br>
+                        BE POC in Netherlands<br>
+                        Hotfixes & issue intake
+                    </div>
+                </div>
+
+                <div class="team-member-card jiawen">
+                    <div class="team-avatar">J</div>
+                    <h4>Jiawen</h4>
+                    <div class="team-specialty">System Architect</div>
+                    <div class="team-details">
+                        System architecture<br>
+                        Design review<br>
+                        Wide-scope oversight
+                    </div>
+                </div>
+
+                <div class="team-member-card marco">
+                    <div class="team-avatar">M</div>
+                    <h4>Marco</h4>
+                    <div class="team-specialty">Firmware Features</div>
+                    <div class="team-details">
+                        Firmware-specific<br>
+                        feature development<br>
+                        FW integration
+                    </div>
+                </div>
+
+                <div class="team-member-card kevin">
+                    <div class="team-avatar">K</div>
+                    <h4>Kevin</h4>
+                    <div class="team-specialty">Infrastructure & IT</div>
+                    <div class="team-details">
+                        Infrastructure<br>
+                        IT related work<br>
+                        DevOps
+                    </div>
+                </div>
+            </div>
+
+            <!-- Work Tracks -->
+            <div class="work-tracks">
+                <div class="track-card small">
+                    <div class="track-header">
+                        <div class="track-icon">⚡</div>
+                        <div>
+                            <h4>Small Scope Work</h4>
+                            <div class="track-subtitle">Issue fixes, minor improvements</div>
+                        </div>
+                    </div>
+                    <ul class="track-steps">
+                        <li>
+                            <div class="step-num">1</div>
+                            <div class="step-content">
+                                <strong>Description in Jira</strong><br>
+                                Clear problem statement and acceptance criteria
+                            </div>
+                        </li>
+                        <li>
+                            <div class="step-num">2</div>
+                            <div class="step-content">
+                                <strong>Code Change</strong><br>
+                                Implementation with unit tests
+                            </div>
+                        </li>
+                        <li>
+                            <div class="step-num">3</div>
+                            <div class="step-content">
+                                <strong>Code Review</strong> in GitHub
+                                <div class="reviewer-tags">
+                                    <span class="reviewer-tag grig">Grigoriy</span>
+                                    <span class="reviewer-tag jiawen">Jiawen</span>
+                                    <span class="reviewer-tag phyllis">Phyllis</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="step-num">4</div>
+                            <div class="step-content">
+                                <strong>Unit & Integration Tests</strong><br>
+                                Verified and passing
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="track-card large">
+                    <div class="track-header">
+                        <div class="track-icon">🏗️</div>
+                        <div>
+                            <h4>Wide Scope Work</h4>
+                            <div class="track-subtitle">Major features, architecture changes</div>
+                        </div>
+                    </div>
+                    <ul class="track-steps">
+                        <li>
+                            <div class="step-num">1</div>
+                            <div class="step-content">
+                                <strong>Design One-Pager</strong><br>
+                                Attached to Jira ticket
+                            </div>
+                        </li>
+                        <li>
+                            <div class="step-num">2</div>
+                            <div class="step-content">
+                                <strong>Architecture Review</strong>
+                                <div class="reviewer-tags">
+                                    <span class="reviewer-tag jiawen">Jiawen (Architect)</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="step-num">3</div>
+                            <div class="step-content">
+                                <strong>Code Review</strong> by Architect & Lead
+                                <div class="reviewer-tags">
+                                    <span class="reviewer-tag jiawen">Jiawen</span>
+                                    <span class="reviewer-tag phyllis">Phyllis</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="step-num">4</div>
+                            <div class="step-content">
+                                <strong>Unit & Integration Tests</strong><br>
+                                + Metrics & alerts for faults
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Release -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">4</div>
+                <div class="section-title">Release</div>
+                <div class="section-subtitle">Deployment Cadence</div>
+            </div>
+
+            <div class="release-grid">
+                <div class="release-card acceptance">
+                    <div class="release-icon">🧪</div>
+                    <h4>Acceptance Environment</h4>
+                    <div class="release-frequency">Daily</div>
+                    <div class="release-desc">Continuous deployment for testing and validation</div>
+                </div>
+
+                <div class="release-card production">
+                    <div class="release-icon">🚀</div>
+                    <h4>Production</h4>
+                    <div class="release-frequency">Twice a Week</div>
+                    <div class="release-desc">Stable releases with proper bake time</div>
+                </div>
+            </div>
+
+            <!-- Visual Flow Summary -->
+            <div class="visual-flow">
+                <h4>Complete Flow Summary</h4>
+                <div class="flow-diagram">
+                    <div class="flow-box intake">Rachel / Dave / Jop</div>
+                    <span class="flow-arrow-small">→</span>
+                    <div class="flow-box consolidate">Phyllis<br><small>Prioritize</small></div>
+                    <span class="flow-arrow-small">→</span>
+                    <div class="flow-box sprint">Sprint Team<br><small>1 week</small></div>
+                    <span class="flow-arrow-small">→</span>
+                    <div class="flow-box review">Code Review<br><small>GitHub</small></div>
+                    <span class="flow-arrow-small">→</span>
+                    <div class="flow-box acceptance">Acceptance<br><small>Daily</small></div>
+                    <span class="flow-arrow-small">→</span>
+                    <div class="flow-box production">Production<br><small>2x/week</small></div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Application Team Vision • Weheat Engineering • January 2026</p>
+            <p style="margin-top: 6px; font-size: 0.75rem;">Specialties are flexible and may change over time</p>
+        </footer>
+    </div>
+</body>
+</html>
